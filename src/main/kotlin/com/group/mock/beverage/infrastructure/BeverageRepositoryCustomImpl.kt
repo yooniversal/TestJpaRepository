@@ -1,4 +1,19 @@
 package com.group.mock.beverage.infrastructure
 
-class BeverageRepositoryCustomImpl : BeverageRepositoryCustom {
+import com.group.mock.beverage.domain.Beverage
+import com.group.mock.beverage.domain.QBeverage.beverage
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
+
+class BeverageRepositoryCustomImpl : BeverageRepositoryCustom, QuerydslRepositorySupport(Beverage::class.java) {
+    override fun getBeverageByPlaceId(placeId: Long): List<Beverage> {
+        return from(beverage)
+            .where(beverage.placeId.eq(placeId))
+            .fetch()
+    }
+
+    override fun getBeverageByFoodId(foodId: Long): List<Beverage> {
+        return from(beverage)
+            .where(beverage.foodId.eq(foodId))
+            .fetch()
+    }
 }

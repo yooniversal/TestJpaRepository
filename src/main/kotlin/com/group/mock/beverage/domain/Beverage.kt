@@ -10,4 +10,6 @@ class Beverage(
     @GeneratedValue
     val id: Long = 0,
     val name: String,
+    val foodId: Long,
+    val placeId: Long,
 )
