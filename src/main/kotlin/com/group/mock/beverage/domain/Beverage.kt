@@ -1,15 +1,23 @@
 package com.group.mock.beverage.domain
 
+import com.group.mock.food.domain.Food
+import com.group.mock.place.domain.Place
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 
 @Entity
-class Beverage(
+data class Beverage(
     @Id
     @GeneratedValue
     val id: Long = 0,
+
     val name: String,
-    val foodId: Long,
-    val placeId: Long,
+
+    @ManyToOne
+    val food: Food,
+
+    @ManyToOne
+    val place: Place,
 )

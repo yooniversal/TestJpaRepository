@@ -5,9 +5,10 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 
 @Entity
-class Food(
+data class Food(
     @Id
     @GeneratedValue
     val id: Long = 0,
+
     val name: String,
 )
