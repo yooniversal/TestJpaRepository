@@ -15,4 +15,4 @@ class TestDatabase<T, ID>(
 
 val BEVERAGE_TEST_DB = TestDatabase<Beverage, Long>("id")
 val FOOD_TEST_DB = TestDatabase<Food, Long>("id")
-val PLACE_ENTITY_TEST_DB = TestDatabase<Place, Long>("id")
+val PLACE_TEST_DB = TestDatabase<Place, Long>("id")
