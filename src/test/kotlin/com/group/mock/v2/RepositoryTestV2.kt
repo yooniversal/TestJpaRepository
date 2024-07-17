@@ -10,6 +10,7 @@ import com.group.mock.v2.food.TestFoodRepositoryV2
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.springframework.data.repository.findByIdOrNull
 
 class RepositoryTestV2 {
     private lateinit var beverageRepository: BeverageRepository
@@ -32,13 +33,11 @@ class RepositoryTestV2 {
         val savedBeverage = beverageRepository.save(beverage)
 
         // then
-        beverageRepository.findById(savedBeverage.id).also { optionalBeverage ->
-            assertThat(optionalBeverage.isPresent).isTrue
-            optionalBeverage.get().also { beverage ->
-                assertThat(beverage.name).isEqualTo("milk")
-                assertThat(beverage.food.name).isEqualTo("bread")
-                assertThat(beverage.place.name).isEqualTo("bakery")
-            }
+        beverageRepository.findByIdOrNull(savedBeverage.id).also { beverage ->
+            assertThat(beverage).isNotNull
+            assertThat(beverage!!.name).isEqualTo("milk")
+            assertThat(beverage.food.name).isEqualTo("bread")
+            assertThat(beverage.place.name).isEqualTo("bakery")
         }
     }
 
@@ -54,13 +53,11 @@ class RepositoryTestV2 {
         val updatedBeverage = beverageRepository.save(savedBeverage.copy(name = "coffee"))
 
         // then
-        beverageRepository.findById(updatedBeverage.id).also { optionalBeverage ->
-            assertThat(optionalBeverage.isPresent).isTrue
-            optionalBeverage.get().also { beverage ->
-                assertThat(beverage.name).isEqualTo("coffee")
-                assertThat(beverage.food.name).isEqualTo("bread")
-                assertThat(beverage.place.name).isEqualTo("bakery")
-            }
+        beverageRepository.findByIdOrNull(updatedBeverage.id).also { beverage ->
+            assertThat(beverage).isNotNull
+            assertThat(beverage!!.name).isEqualTo("coffee")
+            assertThat(beverage.food.name).isEqualTo("bread")
+            assertThat(beverage.place.name).isEqualTo("bakery")
         }
     }
 
@@ -76,8 +73,8 @@ class RepositoryTestV2 {
         beverageRepository.deleteById(savedBeverage.id)
 
         // then
-        beverageRepository.findById(savedBeverage.id).also { optionalBeverage ->
-            assertThat(optionalBeverage.isPresent).isFalse
+        beverageRepository.findByIdOrNull(savedBeverage.id).also { beverage ->
+            assertThat(beverage).isNull()
         }
     }
 
@@ -93,8 +90,8 @@ class RepositoryTestV2 {
         beverageRepository.delete(savedBeverage)
 
         // then
-        beverageRepository.findById(savedBeverage.id).also { optionalBeverage ->
-            assertThat(optionalBeverage.isPresent).isFalse
+        beverageRepository.findByIdOrNull(savedBeverage.id).also { beverage ->
+            assertThat(beverage).isNull()
         }
     }
 
