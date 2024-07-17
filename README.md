@@ -4,7 +4,8 @@
 </div>
 
 ## Overview
-**TestJpaRepository** is an abstract class that implements the JpaRepository interface, designed to simulate a JpaRepository in a testing environment. 
+**TestJpaRepository** is an abstract class that implements the JpaRepository interface (from [spring-data-jpa](https://github.com/spring-projects/spring-data-jpa)), 
+designed to simulate a JpaRepository in a testing environment. 
 This class provides functionality similar to a JpaRepository, allowing you to verify data access logic without a test database. 
 It operates entirely in-memory, making it fast and independent of any external database.
 
@@ -65,4 +66,5 @@ The following methods throw `UnsupportedOperationException` as they are not supp
 Additionally:
 - `flush()` method does nothing.
 
-## Licenses
+## License
+[MIT License](https://github.com/yooniversal/TestJpaRepository?tab=MIT-1-ov-file)
