@@ -9,6 +9,7 @@ import com.group.mock.v2.beverage.TestBeverageRepositoryV2
 import com.group.mock.v2.food.TestFoodRepositoryV2
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.data.repository.findByIdOrNull
 
@@ -23,7 +24,8 @@ class RepositoryTestV2 {
     }
 
     @Test
-    fun `Beverage를 저장 및 조회할 수 있다`() {
+    @DisplayName("Beverage를 저장 및 조회할 수 있다")
+    fun `save and read a Beverage`() {
         // given
         val food = Food(name = "bread")
         val place = Place(name = "bakery")
@@ -42,7 +44,8 @@ class RepositoryTestV2 {
     }
 
     @Test
-    fun `Beverage를 수정할 수 있다`() {
+    @DisplayName("Beverage를 수정할 수 있다")
+    fun `modify a Beverage`() {
         // given
         val food = Food(name = "bread")
         val place = Place(name = "bakery")
@@ -62,7 +65,8 @@ class RepositoryTestV2 {
     }
 
     @Test
-    fun `Beverage를 id로 삭제할 수 있다`() {
+    @DisplayName("Beverage를 id로 삭제할 수 있다")
+    fun `delete Beverage by id`() {
         // given
         val food = Food(name = "bread")
         val place = Place(name = "bakery")
@@ -79,7 +83,8 @@ class RepositoryTestV2 {
     }
 
     @Test
-    fun `Beverage를 entity로 삭제할 수 있다`() {
+    @DisplayName("Beverage를 entity로 삭제할 수 있다")
+    fun `delete Beverage by entity`() {
         // given
         val food = Food(name = "bread")
         val place = Place(name = "bakery")
@@ -96,7 +101,8 @@ class RepositoryTestV2 {
     }
 
     @Test
-    fun `Food를 저장한 Repository가 달라도 정합성이 깨지지 않는다`() {
+    @DisplayName("Food를 저장한 Repository가 달라도 정합성이 깨지지 않는다")
+    fun `Data integrity remains intact even if the Food is stored in different repositories`() {
         // given
         val food = Food(name = "bread")
         val place = Place(name = "bakery")
