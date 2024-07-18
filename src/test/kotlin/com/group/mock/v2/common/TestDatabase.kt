@@ -6,7 +6,7 @@ import com.group.mock.place.domain.Place
 import java.util.concurrent.atomic.AtomicLong
 
 class TestDatabase<T, ID>(
-    val idName: String,
+    val indexName: String,
 ) {
     val index = AtomicLong(0L)
     val indexSet = mutableSetOf<ID>()
