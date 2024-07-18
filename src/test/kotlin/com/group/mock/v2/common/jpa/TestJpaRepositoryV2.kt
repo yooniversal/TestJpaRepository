@@ -16,7 +16,7 @@ abstract class TestJpaRepositoryV2<T, ID>(
 
     private val index: AtomicLong = testDatabase.index
     private val indexSet = testDatabase.indexSet
-    private val idName = testDatabase.idName
+    private val indexName = testDatabase.indexName
     protected val entityList: MutableList<T> = testDatabase.entityList
 
     override fun <S : T> save(entity: S): S {
@@ -165,7 +165,7 @@ abstract class TestJpaRepositoryV2<T, ID>(
 
     protected fun <T : Any, ID> T.getId(): ID? {
         return this::class.memberProperties
-            .firstOrNull { it.name == idName }?.getter?.call(this) as? ID
+            .firstOrNull { it.name == indexName }?.getter?.call(this) as? ID
     }
 
     protected inline fun <T : Any, reified TYPE> T.getField(fieldName: String): TYPE? {
@@ -194,7 +194,7 @@ abstract class TestJpaRepositoryV2<T, ID>(
     }
 
     private fun <S : T> updateId(entity: S) {
-        entity::class.java.getDeclaredField(idName).apply {
+        entity::class.java.getDeclaredField(indexName).apply {
             isAccessible = true
 
             generateId(type).let { newIndex ->
