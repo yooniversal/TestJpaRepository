@@ -55,7 +55,6 @@ You can refer to the structures, implementations and test codes of **V1** and **
 
 ## Unsupported Features
 The following methods throw `UnsupportedOperationException` as they are not supported in `TestJpaRepository`:
-- `saveAll(entities: Iterable<S>)`
 - `findAll(example: Example<S>)`
 - `findAll(example: Example<S>, sort: Sort)`
 - `findAll(example: Example<S>, pageable: Pageable)`
