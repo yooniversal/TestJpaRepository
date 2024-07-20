@@ -113,7 +113,7 @@ abstract class TestJpaRepositoryV1<T, ID>(
         return save(entity)
     }
 
-    override fun <S : T, R : Any?> findBy(
+    override fun <S : T, R : Any> findBy(
             example: Example<S>,
             queryFunction: Function<FluentQuery.FetchableFluentQuery<S>, R>
     ): R {
