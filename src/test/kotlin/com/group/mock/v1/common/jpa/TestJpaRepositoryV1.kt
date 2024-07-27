@@ -11,7 +11,7 @@ import kotlin.reflect.full.memberProperties
 
 abstract class TestJpaRepositoryV1<T, ID>(
     private val indexName: String,
-) : JpaRepository<T, ID> where T : Any {
+) : JpaRepository<T, ID> where T : Any, ID : Any {
 
     private val index = AtomicLong(0L)
     private val indexSet = mutableSetOf<ID>()
@@ -208,9 +208,9 @@ abstract class TestJpaRepositoryV1<T, ID>(
 
     private fun generateId(type: Class<*>): ID {
         return when (type) {
-            Long::class.java -> return index.incrementAndGet() as ID
+            Long::class.java -> index.incrementAndGet() as ID
             Int::class.java -> index.incrementAndGet().toInt() as ID
-            String::class.java -> return UUID.randomUUID().toString() as ID
+            String::class.java -> UUID.randomUUID().toString() as ID
             else -> throw IllegalArgumentException("Unsupported id type")
         }
     }
