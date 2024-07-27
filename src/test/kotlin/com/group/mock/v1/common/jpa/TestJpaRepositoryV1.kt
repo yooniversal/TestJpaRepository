@@ -11,7 +11,7 @@ import kotlin.reflect.full.memberProperties
 
 abstract class TestJpaRepositoryV1<T, ID>(
     private val indexName: String,
-) : JpaRepository<T, ID> where T : Any {
+) : JpaRepository<T, ID> where T : Any, ID : Any {
 
     private val index = AtomicLong(0L)
     private val indexSet = mutableSetOf<ID>()

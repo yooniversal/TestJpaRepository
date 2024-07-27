@@ -3,16 +3,14 @@ package com.group.mock.v2.common.jpa
 import com.group.mock.v2.common.TestDatabase
 import org.springframework.data.domain.*
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.repository.query.FluentQuery
 import org.springframework.util.Assert
 import java.util.*
 import java.util.concurrent.atomic.AtomicLong
-import java.util.function.Function
 import kotlin.reflect.full.memberProperties
 
 abstract class TestJpaRepositoryV2<T, ID>(
     private val testDatabase: TestDatabase<T, ID>,
-) : JpaRepository<T, ID> where T : Any {
+) : JpaRepository<T, ID> where T : Any, ID : Any {
 
     private val index: AtomicLong = testDatabase.index
     private val indexSet = testDatabase.indexSet
@@ -113,13 +111,6 @@ abstract class TestJpaRepositoryV2<T, ID>(
 
     override fun <S : T> saveAndFlush(entity: S): S {
         return save(entity)
-    }
-
-    override fun <S : T, R : Any> findBy(
-        example: Example<S>,
-        queryFunction: Function<FluentQuery.FetchableFluentQuery<S>, R>
-    ): R {
-        throw UnsupportedOperationException(NOT_SUPPORTED)
     }
 
     override fun <S : T> exists(example: Example<S>): Boolean {
