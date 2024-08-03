@@ -9,8 +9,8 @@ abstract class TestRepositorySupport {
 
     @AfterEach
     fun tearDown() {
-        TestBeverageRepository.deleteAll()
-        TestFoodRepository.deleteAll()
-        TestPlaceRepository.deleteAll()
+        TestBeverageRepository.initalize()
+        TestFoodRepository.initalize()
+        TestPlaceRepository.initalize()
     }
 }

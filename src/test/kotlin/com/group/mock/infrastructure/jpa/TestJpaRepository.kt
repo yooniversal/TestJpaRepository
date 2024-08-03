@@ -161,11 +161,15 @@ abstract class TestJpaRepository<T, ID>(
         throw UnsupportedOperationException(NOT_SUPPORTED)
     }
 
+    fun initalize() {
+        deleteAll()
+        index.set(0L)
+    }
+
     protected fun <T : Any, ID> T.getId(): ID? {
         return this::class.memberProperties
                 .firstOrNull { it.name == indexName }?.getter?.call(this) as? ID
     }
-
     protected inline fun <T : Any, reified TYPE> T.getField(fieldName: String): TYPE? {
         return this::class.memberProperties
                 .firstOrNull { it.name == fieldName }?.getter?.call(this) as? TYPE
