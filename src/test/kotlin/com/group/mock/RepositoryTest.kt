@@ -15,14 +15,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.data.repository.findByIdOrNull
 
 class RepositoryTest {
-    private lateinit var beverageRepository: BeverageRepository
-    private lateinit var foodRepository: FoodRepository
 
-    @BeforeEach
-    fun setUp() {
-        beverageRepository = TestBeverageRepository()
-        foodRepository = TestFoodRepository()
-    }
+    private val beverageRepository = TestBeverageRepository
+    private val foodRepository = TestFoodRepository
 
     @Test
     @DisplayName("Beverage를 저장 및 조회할 수 있다")
