@@ -17,31 +17,30 @@ It operates entirely in-memory, making it fast and independent of any external d
 3. In test class, define a repository field with the repository interface type and initialize it with what you made at `1`.
 
 ```kt
-// Create a repository class for testing
+// Create a repository as singleton for testing easily
 // Pass the ID field name "id" to the constructor
 // Example says Beverage Entity use PK field name as "id"
-class TestBeverageRepository : TestJpaRepository<Beverage, Long>("id"), BeverageRepository {
+object TestBeverageRepository : TestJpaRepository<Beverage, Long>("id"), BeverageRepository {
 }
 
-class TestExample {
-    // Define the repository field with the interface type as used in production
-    private laitinit var beverageRepository: BeverageRepository
-
-    @BeforeEach
-    fun setUp() {
-        // Initialize it with the repository for testing
-        beverageRepository = TestBeverageRepositoryV1()
+// Initialize data in test repositories by TestRepositorySupport 
+abstract class TestRepositorySupport {
+    @AfterEach
+    fun tearDown() {
+        TestBeverageRepository.initalize() // defined at TestJpaRepository
     }
+}
+
+class TestExample : TestRepositorySupport() {
+    private val beverageRepository = TestBeverageRepository
 }
 ```
 
-## Versions
-You can refer to the structures, implementations and test codes of **V1** and **V2** presented below.
-| V1                                      | V2                                      |
-| :------: | :------: |
-| <img width="627" alt="240718_test_jpa_repository_v1" src="https://github.com/user-attachments/assets/66997aa9-f5e5-4902-9c3c-8596723e2bd1">             | <img width="589" alt="0715_initilaized_db" src="https://github.com/user-attachments/assets/4ca66ca6-3b1b-440c-b857-f4effc100440">             |
-| [TestJpaRepositoryV1.kt](https://github.com/yooniversal/TestJpaRepository/blob/main/src/test/kotlin/com/group/mock/v1/common/jpa/TestJpaRepositoryV1.kt) | [TestJpaRepositoryV2.kt](https://github.com/yooniversal/TestJpaRepository/blob/main/src/test/kotlin/com/group/mock/v2/common/jpa/TestJpaRepositoryV2.kt)<br>[TestDatabase.kt](https://github.com/yooniversal/TestJpaRepository/blob/main/src/test/kotlin/com/group/mock/v2/common/TestDatabase.kt) |
-| [RepositoryTestV1.kt](https://github.com/yooniversal/TestJpaRepository/blob/main/src/test/kotlin/com/group/mock/v1/RepositoryTestV1.kt) | [RepositoryTestV2.kt](https://github.com/yooniversal/TestJpaRepository/blob/main/src/test/kotlin/com/group/mock/v2/RepositoryTestV2.kt) |
+## Code
+You can refer to the TestJpaRepository, TestRepositorySupport and example use case below.
+- [TestJpaRepository](https://github.com/yooniversal/TestJpaRepository/blob/main/src/test/kotlin/com/group/mock/infrastructure/jpa/TestJpaRepository.kt)
+- [TestRepositorySupport](https://github.com/yooniversal/TestJpaRepository/blob/main/src/test/kotlin/com/group/mock/configuration/TestRepositorySupport.kt)
+- [RepositoryTest](https://github.com/yooniversal/TestJpaRepository/blob/main/src/test/kotlin/com/group/mock/RepositoryTest.kt) *(example)*
 
 ## Advantages
 - **No Database Dependency**: Enables testing without the need for a database.
