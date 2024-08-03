@@ -6,6 +6,7 @@ import com.group.mock.food.domain.Food
 import com.group.mock.food.infrastructure.FoodRepository
 import com.group.mock.place.domain.Place
 import com.group.mock.beverage.TestBeverageRepository
+import com.group.mock.configuration.TestRepositorySupport
 import com.group.mock.food.TestFoodRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.data.repository.findByIdOrNull
 
-class RepositoryTest {
+class RepositoryTest : TestRepositorySupport() {
 
     private val beverageRepository = TestBeverageRepository
     private val foodRepository = TestFoodRepository
