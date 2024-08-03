@@ -1,10 +1,10 @@
-package com.group.mock.v1.beverage
+package com.group.mock.beverage
 
 import com.group.mock.beverage.domain.Beverage
 import com.group.mock.beverage.infrastructure.BeverageRepository
-import com.group.mock.v1.infrastructure.jpa.TestJpaRepositoryV1
+import com.group.mock.infrastructure.jpa.TestJpaRepository
 
-class TestBeverageRepositoryV1 : TestJpaRepositoryV1<Beverage, Long>("id"), BeverageRepository {
+class TestBeverageRepository : TestJpaRepository<Beverage, Long>("id"), BeverageRepository {
     override fun getBeverageByPlaceId(placeId: Long): List<Beverage> {
         return entityList.filter { it.place.id == placeId }
     }

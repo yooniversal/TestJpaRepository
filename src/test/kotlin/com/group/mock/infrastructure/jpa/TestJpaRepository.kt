@@ -1,4 +1,4 @@
-package com.group.mock.v1.infrastructure.jpa
+package com.group.mock.infrastructure.jpa
 
 import org.springframework.data.domain.*
 import org.springframework.data.jpa.repository.JpaRepository
@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong
 import java.util.function.Function
 import kotlin.reflect.full.memberProperties
 
-abstract class TestJpaRepositoryV1<T, ID>(
+abstract class TestJpaRepository<T, ID>(
     private val indexName: String,
 ) : JpaRepository<T, ID> where T : Any, ID : Any {
 
