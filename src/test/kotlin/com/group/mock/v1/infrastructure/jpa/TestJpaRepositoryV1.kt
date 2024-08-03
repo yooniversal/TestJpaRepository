@@ -1,4 +1,4 @@
-package com.group.mock.v1.common.jpa
+package com.group.mock.v1.infrastructure.jpa
 
 import org.springframework.data.domain.*
 import org.springframework.data.jpa.repository.JpaRepository
