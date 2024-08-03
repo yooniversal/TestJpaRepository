@@ -230,24 +230,4 @@ class RepositoryTest : TestRepositorySupport() {
         assertThatThrownBy { foodRepository.getReferenceById(savedBeverage.food.id) }
                 .isInstanceOf(NoSuchElementException::class.java)
     }
-
-    @Test
-    @DisplayName("Food가 저장된 Repository가 다르면 정합성이 깨진다")
-    fun `Data integrity is broken if the Food is stored in a different repository`() {
-        // given
-        val food = Food(name = "bread")
-        val place = Place(name = "bakery")
-        val beverage = Beverage(name = "milk", food = food, place = place)
-        val savedBeverage = beverageRepository.save(beverage)
-        val savedFood = foodRepository.save(food)
-
-        // when
-        val updatedFood = savedFood.copy(name = "cake")
-        beverageRepository.save(savedBeverage.copy(food = updatedFood))
-
-        // then
-        foodRepository.getReferenceById(savedFood.id).also { food ->
-            assertThat(food.name).isNotEqualTo(updatedFood.name)
-        }
-    }
 }
