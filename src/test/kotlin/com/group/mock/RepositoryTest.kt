@@ -1,16 +1,13 @@
 package com.group.mock
 
-import com.group.mock.beverage.domain.Beverage
-import com.group.mock.beverage.infrastructure.BeverageRepository
-import com.group.mock.food.domain.Food
-import com.group.mock.food.infrastructure.FoodRepository
-import com.group.mock.place.domain.Place
 import com.group.mock.beverage.TestBeverageRepository
+import com.group.mock.beverage.domain.Beverage
 import com.group.mock.configuration.TestRepositorySupport
 import com.group.mock.food.TestFoodRepository
+import com.group.mock.food.domain.Food
+import com.group.mock.place.domain.Place
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.data.repository.findByIdOrNull
