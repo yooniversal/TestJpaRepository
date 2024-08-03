@@ -1,27 +1,21 @@
-package com.group.mock.v2
+package com.group.mock
 
+import com.group.mock.beverage.TestBeverageRepository
 import com.group.mock.beverage.domain.Beverage
-import com.group.mock.beverage.infrastructure.BeverageRepository
+import com.group.mock.configuration.TestRepositorySupport
+import com.group.mock.food.TestFoodRepository
 import com.group.mock.food.domain.Food
-import com.group.mock.food.infrastructure.FoodRepository
 import com.group.mock.place.domain.Place
-import com.group.mock.v2.beverage.TestBeverageRepositoryV2
-import com.group.mock.v2.food.TestFoodRepositoryV2
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.data.repository.findByIdOrNull
 
-class RepositoryTestV2 {
-    private lateinit var beverageRepository: BeverageRepository
-    private lateinit var foodRepository: FoodRepository
+class RepositoryTest : TestRepositorySupport() {
 
-    @BeforeEach
-    fun setUp() {
-        beverageRepository = TestBeverageRepositoryV2()
-        foodRepository = TestFoodRepositoryV2()
-    }
+    private val beverageRepository = TestBeverageRepository
+    private val foodRepository = TestFoodRepository
 
     @Test
     @DisplayName("Beverage를 저장 및 조회할 수 있다")
@@ -197,8 +191,8 @@ class RepositoryTestV2 {
         beverageRepository.delete(savedBeverage)
 
         // then
-        beverageRepository.findByIdOrNull(savedBeverage.id).also { beverage ->
-            assertThat(beverage).isNull()
+        beverageRepository.findById(savedBeverage.id).also { optionalBeverage ->
+            assertThat(optionalBeverage.isPresent).isFalse
         }
     }
 
@@ -221,21 +215,16 @@ class RepositoryTestV2 {
     }
 
     @Test
-    @DisplayName("Food를 저장한 Repository가 달라도 정합성이 깨지지 않는다")
-    fun `Data integrity remains intact even if the Food is stored in different repositories`() {
+    @DisplayName("위치가 다른 FoodRepository에 저장하면 조회할 수 없다")
+    fun `cannot read Food entity saved at different repository`() {
         // given
         val food = Food(name = "bread")
         val place = Place(name = "bakery")
         val beverage = Beverage(name = "milk", food = food, place = place)
         val savedBeverage = beverageRepository.save(beverage)
 
-        // when
-        val updatedFood = savedBeverage.food.copy(name = "cake")
-        beverageRepository.save(savedBeverage.copy(food = updatedFood))
-
-        // then
-        foodRepository.getReferenceById(updatedFood.id).also { food ->
-            assertThat(food.name).isEqualTo("cake")
-        }
+        // when & then
+        assertThatThrownBy { foodRepository.getReferenceById(savedBeverage.food.id) }
+                .isInstanceOf(NoSuchElementException::class.java)
     }
 }

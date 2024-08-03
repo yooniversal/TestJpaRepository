@@ -1,4 +1,4 @@
-package com.group.mock.v1.common.jpa
+package com.group.mock.infrastructure.jpa
 
 import org.springframework.data.domain.*
 import org.springframework.data.jpa.repository.JpaRepository
@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong
 import java.util.function.Function
 import kotlin.reflect.full.memberProperties
 
-abstract class TestJpaRepositoryV1<T, ID>(
+abstract class TestJpaRepository<T, ID>(
     private val indexName: String,
 ) : JpaRepository<T, ID> where T : Any, ID : Any {
 
@@ -161,11 +161,15 @@ abstract class TestJpaRepositoryV1<T, ID>(
         throw UnsupportedOperationException(NOT_SUPPORTED)
     }
 
+    fun initalize() {
+        deleteAll()
+        index.set(0L)
+    }
+
     protected fun <T : Any, ID> T.getId(): ID? {
         return this::class.memberProperties
                 .firstOrNull { it.name == indexName }?.getter?.call(this) as? ID
     }
-
     protected inline fun <T : Any, reified TYPE> T.getField(fieldName: String): TYPE? {
         return this::class.memberProperties
                 .firstOrNull { it.name == fieldName }?.getter?.call(this) as? TYPE
